@@ -4,7 +4,7 @@ import { TUserDto } from '../dto/user.dto'
 
 export default (user: TUserDto, session: number): string => {
 
-    const token = jwt.sign(
+    const token: string = jwt.sign(
         {
             id: user.id,
             session: session

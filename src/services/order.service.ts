@@ -1,11 +1,11 @@
-import { bookDto } from "../dto/book.dto"
-import { orderDto } from "../dto/order.dto"
-import { TUserDto } from "../dto/user.dto"
-import { BookRepository } from "../repositories/book.repository"
-import { OrderRepository } from "../repositories/order.repository"
-import { UserRepository } from "../repositories/user.repository"
-import { IError } from "../types/error.types"
-import { HttpStatus } from "../utils/httpStatus"
+import {bookDto} from "../dto/book.dto"
+import {orderDto} from "../dto/order.dto"
+import {TUserDto} from "../dto/user.dto"
+import {BookRepository} from "../repositories/book.repository"
+import {OrderRepository} from "../repositories/order.repository"
+import {UserRepository} from "../repositories/user.repository"
+import {IError} from "../types/error.types"
+import {HttpStatus} from "../utils/httpStatus"
 
 export class OrderRService {
 
@@ -31,8 +31,7 @@ export class OrderRService {
         if (book.count > 0) {
             await this.userRepository.update({...user, balance:  user.balance - book.price})
             await this.bookRepository.update({...book, count: book.count - 1, category_id: book.genre_id})
-            const result: orderDto = await this.orderRepository.create(orderDto)
-            return result
+            return await this.orderRepository.create(orderDto)
         }
         return HttpStatus(404, "Book with such title doesn't exist!")
     }

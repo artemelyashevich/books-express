@@ -1,5 +1,5 @@
-import { genreDto } from "../dto/genre.dto";
-import { GenreRepository } from "../repositories/genre.repository";
+import {genreDto} from "../dto/genre.dto";
+import {GenreRepository} from "../repositories/genre.repository";
 
 export class GenreService {
 
@@ -10,12 +10,10 @@ export class GenreService {
     }
 
     public async findAll(): Promise<genreDto[]> {
-        const result: genreDto[] = await this.genreRepository.findAll()
-        return result
+        return await this.genreRepository.findAll()
     }
 
     public async create(genreDto: genreDto): Promise<genreDto> {
-        const result: genreDto = await this.genreRepository.create(genreDto)
-        return result
+        return await this.genreRepository.create(genreDto)
     }
 }

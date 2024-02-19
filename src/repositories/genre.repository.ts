@@ -1,5 +1,6 @@
-import { pool } from '../database/index'
-import { genreDto } from '../dto/genre.dto'
+import {pool} from '../database'
+import {genreDto} from '../dto/genre.dto'
+import {QueryError} from "mysql2";
 
 
 export class GenreRepository {
@@ -16,9 +17,10 @@ export class GenreRepository {
     }
 
     public findByName(name: string): Promise<genreDto> {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve, reject): void => {
             pool.query<genreDto[]>(
-                `SELECT * FROM genre WHERE genre.name = ?`, [name], (err: any, res: any) => {
+                `SELECT * FROM genre WHERE genre.name = ?`, [name],
+                (err: QueryError | null, res: any): void => {
                     if (err) reject(err)
                     else resolve(res)
                 })
@@ -30,7 +32,8 @@ export class GenreRepository {
             pool.query<genreDto[]>(
                 `SELECT genre.id, genre.name, category.name as cat FROM genre
                 JOIN category 
-                ON category.id = genre.category_id`, (err: any, res: any) => {
+                ON category.id = genre.category_id`,
+                (err: QueryError | null, res: any): void => {
                     if (err) reject(err)
                     else resolve(res)
                 })
@@ -42,7 +45,7 @@ export class GenreRepository {
             pool.query<any>(
                 "DELETE FROM genre WHERE genre.id = ?",
                 [id],
-                (err, res) => {
+                (err: QueryError | null, res): void => {
                     if (err) reject(err)
                     else resolve(res.affectedRows)
                 }

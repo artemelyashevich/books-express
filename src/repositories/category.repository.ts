@@ -1,5 +1,6 @@
-import { pool } from '../database/index'
-import { categoryDto } from '../dto/category.dto'
+import {pool} from '../database'
+import {categoryDto} from '../dto/category.dto'
+import {QueryError} from "mysql2";
 
 
 export class CategoryRepository {
@@ -15,12 +16,12 @@ export class CategoryRepository {
     }
 
     public findByName(name: string): Promise<categoryDto> {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve, reject): void => {
             pool.query<categoryDto[]>(`SELECT * FROM category WHERE category.name = ?`,
                 [
                     name
                 ],
-                (err: any, res: any) => {
+                (err: QueryError | null, res: any): void => {
                     if (err) reject(err)
                     else resolve(res[0])
                 })
@@ -28,8 +29,8 @@ export class CategoryRepository {
     }
 
     public findAll(): Promise<categoryDto[]> {
-        return new Promise((resolve, reject) => {
-            pool.query<categoryDto[]>(`SELECT * FROM category`, (err: any, res: any) => {
+        return new Promise((resolve, reject): void => {
+            pool.query<categoryDto[]>(`SELECT * FROM category`, (err: QueryError | null, res: any) => {
                 if (err) reject(err)
                 else resolve(res)
             })
@@ -37,11 +38,11 @@ export class CategoryRepository {
     }
 
     remove(id: number): Promise<number> {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve, reject): void => {
             pool.query<any>(
                 "DELETE FROM category WHERE category.id = ?",
                 [id],
-                (err, res) => {
+                (err: QueryError | null, res): void => {
                     if (err) reject(err)
                     else resolve(res.affectedRows)
                 }

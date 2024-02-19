@@ -1,8 +1,8 @@
-import { Response, Request, NextFunction } from 'express'
+import {Response, Request, NextFunction} from 'express'
 import dotenv from 'dotenv'
 import jwt from 'jsonwebtoken'
-import { UserRepository } from '../repositories/user.repository'
-import { TUserDto } from '../dto/user.dto'
+import {UserRepository} from '../repositories/user.repository'
+import {TUserDto} from '../dto/user.dto'
 
 dotenv.config()
 

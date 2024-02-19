@@ -1,6 +1,7 @@
 import dotenv from 'dotenv'
-import { pool } from '../database/index'
-import { bookDto } from '../dto/book.dto'
+import {pool} from '../database'
+import {bookDto} from '../dto/book.dto'
+import {QueryError} from "mysql2";
 
 
 dotenv.config()
@@ -8,8 +9,8 @@ dotenv.config()
 export class BookRepository {
 
     findAll(): Promise<bookDto[]> {
-        return new Promise((resolve, reject) => {
-            pool.query<bookDto[]>('SELECT * FROM book', (err: any, res: any) => {
+        return new Promise((resolve, reject): void => {
+            pool.query<bookDto[]>('SELECT * FROM book', (err: QueryError | null, res: any): void => {
                 if (err) reject(err)
                 else resolve(res)
             })
@@ -34,9 +35,9 @@ export class BookRepository {
     }
 
     findByTitle(title: string): Promise<bookDto> {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve, reject): void => {
             pool.query<bookDto[]>(
-                `SELECT * FROM book  WHERE book.title = ?`, [title], (err: any, res: any) => {
+                `SELECT * FROM book  WHERE book.title = ?`, [title], (err: QueryError | null, res: any): void => {
                     if (err) reject(err)
                     else resolve(res[0])
                 })
@@ -44,11 +45,11 @@ export class BookRepository {
     }
 
     remove(id: number): Promise<number> {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve, reject): void => {
             pool.query<any>(
                 "DELETE FROM book WHERE book.id = ?",
                 [id],
-                (err, res) => {
+                (err: QueryError | null, res): void => {
                     if (err) reject(err)
                     else resolve(res.affectedRows)
                 }
@@ -62,13 +63,13 @@ export class BookRepository {
         title = ?, author = ?, description = ?, count = ?, category_id = ?, price = ?
         WHERE id = ?`,
             [
-               bookDto.title,
-               bookDto.author,
-               bookDto.description,
-               bookDto.count,
-               bookDto.genre_id,
-               bookDto.price,
-               bookDto.id
+                bookDto.title,
+                bookDto.author,
+                bookDto.description,
+                bookDto.count,
+                bookDto.genre_id,
+                bookDto.price,
+                bookDto.id
             ]
         )
         return this.findByTitle(bookDto.title)

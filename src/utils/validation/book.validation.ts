@@ -1,5 +1,6 @@
-import { body, validationResult } from "express-validator"
+import {body, validationResult} from "express-validator"
 import {Request, Response, NextFunction} from 'express'
+import {ValidationChain} from "express-validator";
 
 export default (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req)
@@ -9,8 +10,8 @@ export default (req: Request, res: Response, next: NextFunction) => {
     next()
 }
 
-export const createBookValidation = [
-    body('title', 'Title name must contain 3 characters').isLength({ min: 3 }),
-    body('Description', 'Description name must contain 5 characters').isLength({ min: 5 }),
-    body('author', 'Author must contain 3 characters').isLength({ min: 3 })
+export const createBookValidation: ValidationChain[] = [
+    body('title', 'Title name must contain 3 characters').isLength({min: 3}),
+    body('Description', 'Description name must contain 5 characters').isLength({min: 5}),
+    body('author', 'Author must contain 3 characters').isLength({min: 3})
 ]

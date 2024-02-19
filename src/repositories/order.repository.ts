@@ -1,5 +1,6 @@
-import { pool } from '../database/index'
-import { orderDto } from '../dto/order.dto'
+import {pool} from '../database'
+import {orderDto} from '../dto/order.dto'
+import {QueryError} from "mysql2";
 
 export class OrderRepository {
 
@@ -15,9 +16,10 @@ export class OrderRepository {
     }
 
     public findByEmail(email: string): Promise<orderDto> {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve, reject): void => {
             pool.query<orderDto[]>(
-                `SELECT * FROM email.order WHERE order.person_email = ?`, [email], (err: any, res: any) => {
+                `SELECT * FROM email.order WHERE order.person_email = ?`, [email],
+                (err: QueryError | null, res: any): void => {
                     if (err) reject(err)
                     else resolve(res)
                 })

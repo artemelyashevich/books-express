@@ -9,7 +9,7 @@ const categoryService: CategoryService = new CategoryService()
 export default class CategoryController {
 
     async findAll(req: Request, res: Response): Promise<void> {
-        const result = await categoryService.findAll()
+        const result: categoryDto[] = await categoryService.findAll()
         res.status(200).json(result)
     }
 
@@ -17,7 +17,7 @@ export default class CategoryController {
         req: RequestBody<categoryDto>,
         res: Response
     ): Promise<void> {
-        const result = await categoryService.create(req.body)
+        const result: categoryDto = await categoryService.create(req.body)
         res.status(201).json(result)
     }
 
@@ -25,7 +25,7 @@ export default class CategoryController {
         req: RequestParams<{name: string}>,
         res: Response
     ): Promise<void> {
-        const result = await categoryService.findByName(req.params.name)
+        const result: categoryDto = await categoryService.findByName(req.params.name)
         res.status(200).json(result)
     }
 }

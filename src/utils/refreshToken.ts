@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 
 export default (session: number): string => {
 
-    const token = jwt.sign(
+    return jwt.sign(
         {
             session: session
         },
@@ -11,5 +11,4 @@ export default (session: number): string => {
         {
             expiresIn: String(process.env.REFRESH_TOKEN_LIFE)
         })
-    return token
 }

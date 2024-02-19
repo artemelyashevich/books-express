@@ -1,5 +1,5 @@
-import { TUserDto } from "../dto/user.dto"
-import { UserRepository } from "../repositories/user.repository"
+import {TUserDto} from "../dto/user.dto"
+import {UserRepository} from "../repositories/user.repository"
 
 export class UserService{
 
@@ -10,7 +10,6 @@ export class UserService{
     }
 
     async findAll(): Promise<TUserDto[]>{
-        const result: TUserDto[] = await this.userRepository.findAll()
-        return result
+        return await this.userRepository.findAll()
     }
 }

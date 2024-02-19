@@ -1,7 +1,7 @@
-import { Request, Response } from "express"
-import { GenreService } from "../services/genre.service"
-import { RequestBody } from "../types/types"
-import { genreDto } from "../dto/genre.dto"
+import {Request, Response} from "express"
+import {GenreService} from "../services/genre.service"
+import {RequestBody} from "../types/types"
+import {genreDto} from "../dto/genre.dto"
 
 
 const genreService: GenreService = new GenreService()
@@ -9,7 +9,7 @@ const genreService: GenreService = new GenreService()
 export default class GenreController {
 
     async findAll(req: Request, res: Response): Promise<void> {
-        const result = await genreService.findAll() 
+        const result: genreDto[] = await genreService.findAll()
         res.status(200).json(result)
     }
 
@@ -17,7 +17,7 @@ export default class GenreController {
         req: RequestBody<genreDto>,
         res: Response
     ): Promise<void> {
-        const result = await genreService.create(req.body)
+        const result: genreDto = await genreService.create(req.body)
         res.status(201).json(result)
     }
 }

@@ -1,6 +1,6 @@
 import { Router } from "express"
 import AuthController from "../controllers/auth.controller"
-import handleValidators, { signInVAlidation, signUpVAlidation } from "../utils/validation/auth.validation"
+import handleValidators, { signUpValidation, signInValidation } from "../utils/validation/auth.validation"
 
 
 class AuthRoutes {
@@ -14,8 +14,8 @@ class AuthRoutes {
     }
 
     private initializeRoutes(): void {
-        this.router.post("/signup", handleValidators, signUpVAlidation, this.controller.signUp)
-        this.router.post("/sign-in", handleValidators, signInVAlidation, this.controller.signIn)
+        this.router.post("/signup", handleValidators, signUpValidation, this.controller.signUp)
+        this.router.post("/sign-in", handleValidators, signInValidation, this.controller.signIn)
         this.router.post("/refresh", this.controller.refreshToken)
     }
 

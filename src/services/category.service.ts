@@ -1,5 +1,5 @@
-import { categoryDto } from "../dto/category.dto"
-import { CategoryRepository } from "../repositories/category.repository"
+import {categoryDto} from "../dto/category.dto"
+import {CategoryRepository} from "../repositories/category.repository"
 
 export class CategoryService {
 
@@ -10,17 +10,14 @@ export class CategoryService {
     }
 
     public async findAll(): Promise<categoryDto[]> {
-        const result: categoryDto[] = await this.categoryRepository.findAll()
-        return result
+        return await this.categoryRepository.findAll()
     }
 
     public async create(categoryDto: categoryDto): Promise<categoryDto> {
-        const result: categoryDto = await this.categoryRepository.create(categoryDto)
-        return result
+        return await this.categoryRepository.create(categoryDto)
     }
 
     public async findByName(name: string): Promise<categoryDto> {
-        const result: categoryDto = await this.categoryRepository.findByName(name)
-        return result
+        return await this.categoryRepository.findByName(name)
     }
 } 
